@@ -118,3 +118,24 @@ change accordingly within ```f""```
 
 # Terms of USE / Modification 
 Visit [Terms](https://github.com/devgaganin/Save-Restricted-Content-Bot-Repo/blob/main/TERMS_OF_USE.md) and accept the guidelines.
+
+
+
+
+## Deploy on `VPS`
+sudo apt update
+sudo apt install ffmpeg git python3-pip
+git clone your_repo_link
+cd you_repo_name
+pip3 install -r requirements.txt
+python3 -m main
+
+
+
+# Commands Available in Bot
+start - to start the bot
+batch - to download the files in range/bulk by giving one post link and range value
+cancel - to cancel the onging /batch task
+stats - to viewing the statics of bot
+speedtest - can be executed by owner only
+setchat - Set forwarding to a channel/group via channel/group ID including -100

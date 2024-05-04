@@ -157,8 +157,9 @@ async def run_batch(userbot, client, sender, countdown, link):
             return -2
 
 C = "/cancel"
-START_PIC = "https://graph.org/file/da97ceca70e55983b4891.png"
-TEXT = "👋 Hi, This is 'Paid Restricted Content Saver' bot Made with ❤️ by __**Team SPY**__."
+#START_PIC = "https://graph.org/file/da97ceca70e55983b4891.png"
+START_PIC = "https://graph.org/file/01200b16e83fe87987d4e.jpg"
+TEXT = "👋 Hi, This is 'Paid Restricted Content Saver'  ❤️"
 
 @gagan.on(events.NewMessage(pattern=f"^{C}"))
 async def start_command(event):
@@ -176,7 +177,6 @@ async def start_command(event):
         caption=TEXT,
         buttons=buttons
     )
-            
 TEXTING = """
 ```
 Execute /batch command only when you 100% sure.

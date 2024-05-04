@@ -16,12 +16,18 @@ import requests
 from main.plugins.helpers import TimeFormatter,  humanbytes
 
 
+import logging
+
+logging.basicConfig(level=logging.debug,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("telethon").setLevel(logging.INFO)
 
 
 @gagan.on(events.NewMessage(incoming=True, func=lambda e: e.is_private, pattern='/stats'))
 async def stats(event):
     
-   # duz = event.reply("...")
     currentTime = TimeFormatter((time() - botStartTime))
     osUptime = TimeFormatter((time() - boot_time()))
     total, used, free, disk= disk_usage('/')
@@ -55,8 +61,7 @@ async def stats(event):
             f'SWAP: {swap_t} | Used: {swap_p}%\n'\
             f'Memory Total: {mem_t}\n'\
             f'Memory Free: {mem_a}\n'\
-            f'Memory Used: {mem_u}\n'\
-            f'Powered by **__[Team SPY](https://t.me/dev_gagan)__**\n'
+            f'Memory Used: {mem_u}\n'
     
     await event.reply(f"{stats}")
    #duz.edit(stats)

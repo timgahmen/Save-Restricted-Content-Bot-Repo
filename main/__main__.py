@@ -1,5 +1,3 @@
-#Join me @dev_gagan
-
 import logging
 import time
 #from . import bot
@@ -18,7 +16,6 @@ botStartTime = time.time()
 
 
 print("Successfully deployed!")
-print("Bot Deployed : Team SPY")
 
 if __name__ == "__main__":
     from . import bot
@@ -35,4 +32,3 @@ if __name__ == "__main__":
             load_plugins(plugin_name.replace(".py", ""))
     logger.info("Bot Started :)")
     bot.run_until_disconnected()
-    

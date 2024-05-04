@@ -4,8 +4,9 @@ from telethon import events, Button
 from telethon.tl.types import InputMediaPhoto
 
 S = "/start"
-START_PIC = "https://graph.org/file/da97ceca70e55983b4891.png"
-TEXT = "Send me the Link of any message of Restricted Channels to Clone it here.\nFor private channel's messages, send the Invite Link first.\n\n👉🏻Execute /batch for bulk process upto 10K files range."
+#START_PIC = "https://graph.org/file/4acc1e7a441776e31f883.jpg"
+START_PIC = "https://graph.org/file/01200b16e83fe87987d4e.jpg"
+TEXT = "👋 Hi, I am 'Save Restricted Content' bot Made with ❤️ by __**TimmyGahmen**__\n\n✅"
 
 def is_set_button(data):
     return data == "set"
