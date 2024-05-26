@@ -1,11 +1,8 @@
-#Developer : Gagan 
-
-
 import time, os
 
 import logging
 import json
-from .. import bot as gagan
+from .. import bot as TelethonBot
 from .. import userbot, Bot
 from .. import FORCESUB as fs
 from main.plugins.pyroplug import get_msg
@@ -14,7 +11,6 @@ from main.plugins.helpers import get_link, join, screenshot
 from telethon import events
 from pyrogram.errors import FloodWait
 
-#from ethon.telefunc import force_sub
 from main.plugins.helpers import force_sub
 
 logging.basicConfig(level=logging.DEBUG,
@@ -26,13 +22,13 @@ logging.getLogger("telethon").setLevel(logging.INFO)
 ft = f"To use this bot you've to join @{fs}."
 
 message = "Send me the message link you want to start saving from, as a reply to this message."
-          
+
 process=[]
 timer=[]
 user=[]
 
 
-@gagan.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+@TelethonBot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def clone(event):
     logging.info(event)
     file_name = ''
@@ -96,11 +92,11 @@ async def clone(event):
                 m = msg_id
                 await get_msg(userbot, Bot, event.sender_id, edit.id, link, m, file_name)
         except FloodWait as fw:
-            await gagan.send_message(event.sender_id, f'Try again after {fw.value} seconds due to floodwait from telegram.')
+            await TelethonBot.send_message(event.sender_id, f'Try again after {fw.value} seconds due to floodwait from telegram.')
             await edit.delete()
         except Exception as e:
             logging.info(e)
-            await gagan.send_message(event.sender_id, f"An error occurred during cloning of `{link}`\n\n**Error:** {str(e)}")
+            await TelethonBot.send_message(event.sender_id, f"An error occurred during cloning of `{link}`\n\n**Error:** {str(e)}")
             await edit.delete()
         ind = user.index(f'{int(event.sender_id)}')
         user.pop(int(ind))

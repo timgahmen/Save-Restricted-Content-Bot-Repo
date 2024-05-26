@@ -1,39 +1,13 @@
 <h1 align="center">
-  Save restricted Content Bot 
+  <b>Save restricted Content Bot by <a href="https://devgagan.in"> devgagan.in </a>
 </h1> 
 
+Contact: [Telegram](https://t.me/dev_gagan)
 
-## Big thank you to:
+# Try Live Bot (now offline)
+Bot link -https://t.me/advance_content_saver_bot
 
-[TEAM SPY](https://t.me/dev_gagan) - [Github](https://github.com/devgaganin)
-
-[## MaheshChauhan](https://t.me/dronebots) - [Github](https://GitHub.com/Vasusen-code)
-
-
-### A stable telegram bot to get restricted messages with custom thumbnail support. This bot can run in channels directly (in this case custom thumbnail not supported)
-
-## Deploy on `VPS`
-sudo apt update && sudo apt install ffmpeg git python3-pip
-pip3 install -r requirements.txt
-sh bash.sh
-
-# Commands Available in Bot
-start - to start the bot
-batch - to download the files in range/bulk by giving one post link and range value
-cancel - to cancel the onging /batch task
-stats - to viewing the statics of bot
-speedtest - can be executed by owner only
-setchat - Set forwarding to a channel/group via channel/group ID including -100
-
-
-
-
-
-
-
-#### -------------------------------------------------------------------------------------
-
-
+### A stable telegram bot to get restricted messages with custom thumbnail support , made by [TEAM SPY](https://t.me/dev_gagan) This bot can run in channels directly (in this case custom thumbnail not supported)
 
 - works for both public and private chats
 - Custom thumbnail support for Pvt medias
@@ -55,16 +29,21 @@ setchat - Set forwarding to a channel/group via channel/group ID including -100
 - `FORCESUB` - Public channel username without '@'. Don't forget to add bot in channel as administrator. 
 
 # Get API & PYROGRAM:
- API: [Telegram.org](https://my.telegram.org/auth)
+ 
+API: [Telegram.org](https://my.telegram.org/auth)
+
 PYROGRAM SESSION: Search for it ... Make sure the source be trusted otherwise it will lead to accound delete or ban
 
 # How to get vars - [TEAM SPY](https://t.me/dev_gagan)
 
 BOT TOKEN: @Botfather on telegram
+
 AUTH: Go to @missrose_bot, start and send /info to get your id
+
 FORCESUB: Before starting building bots create a public channel and get the username withou '@'
 
 # Deploying Guide - [TEAM SPY](https://t.me/dev_gagan)
+
 ## Deploy on `VPS`
 
 Easy Method:
@@ -142,3 +121,21 @@ Visit [Terms](https://github.com/devgaganin/Save-Restricted-Content-Bot-Repo/blo
 
 
 
+
+## Deploy on `VPS`
+sudo apt update
+sudo apt install ffmpeg git python3-pip
+git clone your_repo_link
+cd you_repo_name
+pip3 install -r requirements.txt
+python3 -m main
+
+
+
+# Commands Available in Bot
+start - to start the bot
+batch - to download the files in range/bulk by giving one post link and range value
+cancel - to cancel the onging /batch task
+stats - to viewing the statics of bot
+speedtest - can be executed by owner only
+setchat - Set forwarding to a channel/group via channel/group ID including -100

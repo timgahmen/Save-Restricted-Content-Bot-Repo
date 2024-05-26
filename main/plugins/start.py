@@ -1,11 +1,15 @@
 import os
-from .. import bot as gagan
+from .. import bot as TelethonBot
 from telethon import events, Button
 from telethon.tl.types import InputMediaPhoto
+from .. import SUDO_USERS
 
+# S = '/' + 's' + 't' + 'a' + 'r' + 't'
 S = "/start"
-START_PIC = "https://graph.org/file/da97ceca70e55983b4891.png"
-TEXT = "Send me the Link of any message of Restricted Channels to Clone it here.\nFor private channel's messages, send the Invite Link first.\n\n👉🏻Execute /batch for bulk process upto 10K files range."
+
+START_PIC = "https://graph.org/file/01200b16e83fe87987d4e.jpg"
+TEXT = "👋 Hi, I am 'Save Restricted Content' bot Made with ❤️ by __**TimmyGahmen**__\n\n✅"
+
 
 def is_set_button(data):
     return data == "set"
@@ -13,13 +17,13 @@ def is_set_button(data):
 def is_rem_button(data):
     return data == "rem"
 
-@gagan.on(events.CallbackQuery(pattern=b"set"))
+@TelethonBot.on(events.CallbackQuery(pattern=b"set"))
 async def sett(event):    
-    gagan = event.client
+    TelethonBot = event.client
     button = await event.get_message()
     msg = await button.get_reply_message()
     await event.delete()
-    async with gagan.conversation(event.chat_id) as conv: 
+    async with TelethonBot.conversation(event.chat_id) as conv: 
         xx = await conv.send_message("Send me any image for thumbnail as a `reply` to this message.")
         x = await conv.get_reply()
         if not x.media:
@@ -36,9 +40,9 @@ async def sett(event):
         os.rename(path, f'./{event.sender_id}.jpg')
         await t.edit("Temporary thumbnail saved!")
 
-@gagan.on(events.CallbackQuery(pattern=b"rem"))
+@TelethonBot.on(events.CallbackQuery(pattern=b"rem"))
 async def remt(event):  
-    gagan = event.client            
+    TelethonBot = event.client            
     await event.edit('Trying... to save Bamby ... Wait')
     try:
         os.remove(f'{event.sender_id}.jpg')
@@ -46,7 +50,18 @@ async def remt(event):
     except Exception:
         await event.edit("No thumbnail saved.")                        
 
-@gagan.on(events.NewMessage(pattern=f"^{S}"))
+
+
+# ----------------------
+# Menue
+# ----------------------
+
+@TelethonBot.on(
+    events.NewMessage(incoming=True,
+                      #from_users=AUTH,
+                      from_users=SUDO_USERS,
+                      pattern=f"{S}",
+                      func=lambda e: e.is_private))
 async def start_command(event):
     # Creating inline keyboard with buttons
     buttons = [
@@ -56,7 +71,7 @@ async def start_command(event):
     ]
 
     # Sending photo with caption and buttons
-    await gagan.send_file(
+    await TelethonBot.send_file(
         event.chat_id,
         file=START_PIC,
         caption=TEXT,

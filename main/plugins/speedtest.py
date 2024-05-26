@@ -15,6 +15,14 @@ from telethon import events
 from .. import bot as gagan
 from .. import Bot, AUTH, SUDO_USERS
 
+import logging
+
+logging.basicConfig(level=logging.debug,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("telethon").setLevel(logging.INFO)
+
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
 def get_readable_time(seconds: int) -> str:

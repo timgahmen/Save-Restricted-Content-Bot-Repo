@@ -1,5 +1,3 @@
-# Join t.me/dev_gagan
-
 import asyncio, time, os
 
 from pyrogram.enums import ParseMode , MessageMediaType
@@ -25,7 +23,10 @@ logging.getLogger("telethon").setLevel(logging.INFO)
 user_chat_ids = {}
 
 def thumbnail(sender):
-    return f'{sender}.jpg' if os.path.exists(f'{sender}.jpg') else f'thumb.jpg'
+    if os.path.exists(f'{sender}.jpg'):
+        return f'{sender}.jpg'
+    else:
+         return None
 
 async def copy_message_with_chat_id(client, sender, chat_id, message_id):
     # Get the user's set chat ID, if available; otherwise, use the original sender ID
@@ -47,6 +48,8 @@ async def send_message_with_chat_id(client, sender, message, parse_mode=None):
         await client.send_message(sender, error_message)
         await client.send_message(sender, f"Make Bot admin in your Channel - {chat_id} and restart the process after /cancel")
   
+
+
 @bot.on(events.NewMessage(incoming=True, pattern='/setchat'))
 async def set_chat_id(event):
     # Extract chat ID from the message
@@ -54,14 +57,21 @@ async def set_chat_id(event):
         chat_id = int(event.raw_text.split(" ", 1)[1])
         # Store user's chat ID
         user_chat_ids[event.sender_id] = chat_id
-        await event.reply("Chat ID set successfully!")
+        await event.reply(f"Channel ID updated to {chat_id}")
     except ValueError:
         await event.reply("Invalid chat ID!")
-      
+
+
+
 async def send_video_with_chat_id(client, sender, path, caption, duration, hi, wi, thumb_path, upm):
     # Get the user's set chat ID, if available; otherwise, use the original sender ID
     chat_id = user_chat_ids.get(sender, sender)
     try:
+        try:
+            thumb_path = await screenshot(upm, duration, sender)
+        except Exception:
+            thumb_path = None
+
         await client.send_video(
             chat_id=chat_id,
             video=path,
@@ -74,7 +84,8 @@ async def send_video_with_chat_id(client, sender, path, caption, duration, hi, w
             progress=progress_for_pyrogram,
             progress_args=(
                 client,
-                '**__Uploading: [Team SPY](https://t.me/dev_gagan)__**\n ',
+                f'**chat_id: {chat_id}\n',
+                f'**UPLOADING:**\n',
                 upm,
                 time.time()
             )
@@ -97,7 +108,8 @@ async def send_document_with_chat_id(client, sender, path, caption, thumb_path, 
             progress=progress_for_pyrogram,
             progress_args=(
                 client,
-                '**__Uploading:__**\n**__Bot made by [Team SPY](https://t.me/dev_gagan)__**',
+                f'**msg_id: {chat_id}\n'
+                f'**UPLOADING:**\n',
                 upm,
                 time.time()
             )
@@ -215,7 +227,8 @@ async def get_msg(userbot, client, sender, edit_id, msg_link, i, file_n):
                 progress=progress_for_pyrogram,
                 progress_args=(
                     client,
-                    "**__Unrestricting__: __[Team SPY](https://t.me/dev_gagan)__**\n ",
+                    f'**msg_id: {msg_id}\n'
+                    f'**DOWNLOADING:**\n',
                     edit,
                     time.time()
                 )
@@ -251,12 +264,15 @@ async def get_msg(userbot, client, sender, edit_id, msg_link, i, file_n):
                     os.rename(file, path)
                     file = path
                 try:
-                    thumb_path =thumbnail(sender)
+                    thumb_path = await screenshot(data, duration, sender)
+                except Exception:
+                    thumb_path = None
                 except Exception as e:
                     logging.info(e)
                     thumb_path = None
                 
-                caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                #caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                caption = f"{msg.caption}\n\n msg_id: {msg_id}):**\n" if msg.caption else f"{msg.caption}\n\n msg_id: {msg_id}):**\n"
                 await send_video_with_chat_id(client, sender, path, caption, duration, hi, wi, thumb_path, upm)
             elif str(file).split(".")[-1] in ['jpg', 'jpeg', 'png', 'webp']:
                 if file_n != '':
@@ -270,7 +286,8 @@ async def get_msg(userbot, client, sender, edit_id, msg_link, i, file_n):
                     file = path
 
                 
-                caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                #caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                caption = f"{msg.caption}\n\n msg_id: {msg_id}):**\n" if msg.caption else f"{msg.caption}\n\n msg_id: {msg_id}):**\n"
                 await upm.edit("__Uploading photo...__")
 
                 await bot.send_file(sender, path, caption=caption)
@@ -286,7 +303,8 @@ async def get_msg(userbot, client, sender, edit_id, msg_link, i, file_n):
                     file = path
                 thumb_path=thumbnail(sender)
                 
-                caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                #caption = f"{msg.caption}\n\n__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__" if msg.caption else "__Unrestricted by **[Team SPY](https://t.me/dev_gagan)**__"
+                caption = f"{msg.caption}\n\n msg_id: {msg_id}):**\n" if msg.caption else f"{msg.caption}\n\n msg_id: {msg_id}):**\n"
                 await send_document_with_chat_id(client, sender, path, caption, thumb_path, upm)
             os.remove(file)
             await upm.delete()
