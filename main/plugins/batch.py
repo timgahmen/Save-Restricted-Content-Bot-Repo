@@ -13,7 +13,8 @@ import asyncio
 import re
 
 from .. import bot as gagan
-from .. import userbot, Bot, AUTH, SUDO_USERS
+from .. import userbot, Bot, AUTH
+from main.__init__ import SUDO_USERS
 
 from main.plugins.pyroplug import check, get_bulk_msg
 from main.plugins.helpers import get_link, screenshot
@@ -198,8 +199,8 @@ async def _bulk(event):
             _range = await conv.get_reply()
             try:
                 value = int(_range.text)
-                if value > 10000:
-                  return await conv.send_message("You can only get upto 10000 files in a single batch...")
+                if value > 1000000:
+                  return await conv.send_message("You can only get upto 1.000.000 files in a single batch...")
             except ValueError:
                 return await conv.send_message("Range must be an integer!")
 
@@ -215,7 +216,7 @@ async def _bulk(event):
             save_batch_data(batch_data)
 
             cd = await conv.send_message("**Batch process ongoing...**\n\nProcess completed: ", 
-                                    buttons=[[Button.url("Join Channel", url="http://t.me/devggn")]])
+                                    buttons=[[Button.inline("CANCEL❌", data="cancel")]])
             co = await r_batch(userbot, Bot, user_id, cd, _link) 
             try: 
                 if co == -2:
@@ -235,26 +236,25 @@ async def _bulk(event):
 
 async def r_batch(userbot, client, sender, countdown, link):
     for i in range(len(ids_data[str(sender)])):
-        timer = 30  # Increased default timer value
-
-        if i < 25:
-            timer = 20
-        elif 250 <= i < 100:
-            timer = 25
-        elif 100 <= i < 1000:
-            timer = 30
-        elif 1000 <= i < 5000:
-            timer = 35
-        elif 5000 <= i < 10000:
-            timer = 40
-        elif 10000 <= i < 20000:
-            timer = 45
-        elif i >= 20000:
-            timer = 60  # Increased timer value for larger counts
+        timer = 6
+        if i < 100:
+            timer = 2
+        elif i < 1000 and i > 100:
+            timer = 3
+        elif i < 10000 and i > 1000:
+            timer = 4
+        elif i < 50000 and i > 10000:
+            timer = 5
+        elif i < 100000 and i > 50000:
+            timer = 6
+        elif i < 200000 and i > 100000:
+            timer = 8
+        elif i < 1000000: 
+            timer = 10
 
         # Adjust the timer for links other than channel links
         if 't.me/c/' not in link:
-            timer = 10 if i < 500 else 30  # Increased timer values for non-channel links
+            timer = 1 if i < 500 else 2  # Increased timer values for non-channel links
 
         try: 
             count_down = f"**Batch process ongoing.**\n\nProcess completed: {i+1}"
@@ -262,7 +262,7 @@ async def r_batch(userbot, client, sender, countdown, link):
             await get_bulk_msg(userbot, client, sender, link, integer)
             protection = await client.send_message(sender, f"Sleeping for `{timer}` seconds to avoid Floodwaits and Protect account!")
             await countdown.edit(count_down, 
-                                 buttons=[[Button.url("Join Channel", url="https://t.me/devggn")]])
+                                 buttons=[[Button.inline("CANCEL❌", data="cancel")]])
             await asyncio.sleep(timer)
             await protection.delete()
         except IndexError as ie:
@@ -284,13 +284,12 @@ async def r_batch(userbot, client, sender, countdown, link):
                 except Exception as e:
                     logger.info(e)
                     if countdown.text != count_down:
-                        await countdown.edit(count_down, buttons=[[Button.url("Join Channel", url="http://t.me/devggn")]])
+                        await countdown.edit(count_down, buttons=[[Button.inline("CANCEL❌", data="cancel")]])
         except Exception as e:
             #logger.info(e)
             #await client.send_message(sender, f"An error occurred during cloning, batch will continue.\n\n**Error:** {str(e)}")
             if countdown.text != count_down:
-                await countdown.edit(count_down, buttons=[[Button.url("Join Channel", url="https://t.me/devggn")]])
+                await countdown.edit(count_down, buttons=[[Button.inline("CANCEL❌", data="cancel")]])
         n = i + 1
         if n == len(ids_data[str(sender)]):
             return -2
-

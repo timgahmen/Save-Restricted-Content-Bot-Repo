@@ -1,14 +1,22 @@
-#Join me at telegram @dev_gagan
-
 from pyrogram import Client
 
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
 
 from decouple import config
-import logging, time, sys
+import time
+import sys
+
+import asyncio
+import uvloop
+
+uvloop.install()
+
+import logging
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("telethon").setLevel(logging.WARNING)
 
@@ -22,30 +30,60 @@ AUTH = config("AUTH", default=None)
 SUDO_USERS = []
 
 if len(AUTH) != 0:
-    SUDO_USERS = {int(AUTH.strip()) for AUTH in AUTH.split()}
+    #SUDO_USERS = {int(AUTH.strip()) for AUTH in AUTH.split()}
+    SUDO_USERS = {int(AUTH.strip()) for AUTH in AUTH.split(",")}
 else:
     SUDO_USERS = set()
 
-bot = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) 
 
-userbot = Client("myacc",api_id=API_ID,api_hash=API_HASH,session_string=SESSION)
+# ---------------------------
+# TelethonBot
+# ---------------------------
+
+# Bot
+bot = TelegramClient(
+    'TelethonBot',
+    API_ID,
+    API_HASH
+    ).start(bot_token=BOT_TOKEN) 
+
+
+# ---------------------------
+# UserBot
+# ---------------------------
+
+userbot = Client(
+    name="UserBot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    session_string=SESSION,
+    workers=8
+    )
 
 try:
     userbot.start()
+    
 except BaseException:
-    print("Your session expired please re add that... thanks @dev_gagan.")
+    print("Userbot Error ! Have you added SESSION while deploying??")
     sys.exit(1)
 
+
+# ---------------------------
+# PyrogramBot
+# ---------------------------
+
 Bot = Client(
-    "SaveRestricted",
+    #help.GetUserInfo,
+    "PyrogramBot",
     bot_token=BOT_TOKEN,
     api_id=int(API_ID),
-    api_hash=API_HASH
+    api_hash=API_HASH,
+    workers=8
 )    
 
 try:
     Bot.start()
 except Exception as e:
-    # print(e)
-    # logger.info(e)
+    #print(e)
+    logger.info(e)
     sys.exit(1)

@@ -1,5 +1,3 @@
-#Github.com/devgaganin
-
 from pyrogram.errors import FloodWait, InviteHashInvalid, InviteHashExpired, UserAlreadyParticipant
 from telethon import errors, events
 
@@ -21,7 +19,8 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("telethon").setLevel(logging.WARNING)
 
 
-#to get width, height and duration(in sec) of a video
+# video_metadata --------------------------------------------------------------------------------------
+# to get width, height and duration(in sec) of a video
 def video_metadata(file):
     vcap = cv2.VideoCapture(f'{file}')
     width = round(vcap.get(cv2.CAP_PROP_FRAME_WIDTH ))
@@ -31,8 +30,8 @@ def video_metadata(file):
     duration = round(frame_count / fps)
     return {'width' : width, 'height' : height, 'duration' : duration }
 
-#Join private chat-------------------------------------------------------------------------------------------------------------
 
+# Join private chat -----------------------------------------------------------------------------------
 async def join(client, invite_link):
     try:
         await client.join_chat(invite_link)
@@ -46,10 +45,9 @@ async def join(client, invite_link):
     except Exception as e:
         print(e)
         return f"{e} \nCould not join, try joining manually."
-    
-    
-    
-#----------------------------------
+
+
+# force_sub -------------------------------------------------------------------------------------------
 async def force_sub(client, channel, id, ft):
     s, r = False, None
     try:
@@ -62,7 +60,8 @@ async def force_sub(client, channel, id, ft):
         s, r = True, "ERROR: Add in ForceSub channel, or check your channel id."
     return s, r
 
-#------------------------------
+
+# TimeFormatter ---------------------------------------------------------------------------------------
 def TimeFormatter(milliseconds) -> str:
     milliseconds = int(milliseconds) * 1000
     seconds, milliseconds = divmod(int(milliseconds), 1000)
@@ -78,7 +77,8 @@ def TimeFormatter(milliseconds) -> str:
     )
     return tmp[:-2]
 
-#--------------------------------------------
+
+# humanbytes -----------------------------------------------------------------------------------------
 def humanbytes(size):
     size = int(size)
     # https://stackoverflow.com/a/49361727/4723940
@@ -91,12 +91,11 @@ def humanbytes(size):
     while size > power:
         size /= power
         n += 1
-    return f"{str(round(size, 2))} {Dic_powerN[n]}B"
+    return str(round(size, 2)) + " " + Dic_powerN[n] + 'B'
 
 
-#Regex---------------------------------------------------------------------------------------------------------------
-#to get the url from event
-
+# Regex -----------------------------------------------------------------------------------------------
+# to get the url from event
 def get_link(string):
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
     url = re.findall(regex,string)
@@ -104,9 +103,9 @@ def get_link(string):
         return link if (link := [x[0] for x in url][0]) else False
     except Exception:
         return False
-    
-#Screenshot---------------------------------------------------------------------------------------------------------------
 
+
+# Screenshot ------------------------------------------------------------------------------------------
 def hhmmss(seconds):
     return time.strftime('%H:%M:%S',time.gmtime(seconds))
 

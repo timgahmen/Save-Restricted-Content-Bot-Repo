@@ -4,10 +4,10 @@ import logging
 import json
 from telethon import events
 from pyrogram.errors import FloodWait
-from .. import bot as gagan
+from main.__init__ import bot as TelethonBot
 from .. import userbot, Bot
 from .. import FORCESUB as fs
-from main.plugins.pyroplug import get_msg, ggn_new
+from main.plugins.pyroplug import get_msg
 from main.plugins.helpers import get_link, join, screenshot
 from main.plugins.helpers import force_sub
 
@@ -24,18 +24,11 @@ process = []
 timer = []
 user = []
 
-# List of commands that should bypass the link check
-commands = ['/dl']  # Add other commands as needed
 
-@gagan.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+@TelethonBot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def clone(event):
     logging.info(event)
     file_name = ''
-
-    # Check if the message starts with a command
-    if any(event.message.text.startswith(command) for command in commands):
-        # Command detected, bypass link check and do nothing
-        return
 
     if event.is_reply:
         reply = await event.get_reply_message()
@@ -102,14 +95,14 @@ async def clone(event):
                     else:
                         msg_id = -1
                 m = msg_id
-                await ggn_new(userbot, Bot, event.sender_id, edit.id, link, m, file_name)
+                await get_msg(userbot, Bot, event.sender_id, edit.id, link, m, file_name)
 
         except FloodWait as fw:
-            await gagan.send_message(event.sender_id, f'Try again after {fw.value} seconds due to floodwait from telegram.')
+            await TelethonBot.send_message(event.sender_id, f'Try again after {fw.value} seconds due to floodwait from telegram.')
             await edit.delete()
         except Exception as e:
             logging.info(e)
-            await gagan.send_message(event.sender_id, f"An error occurred during cloning of `{link}`\n\n**Error:** {str(e)}")
+            await TelethonBot.send_message(event.sender_id, f"An error occurred during cloning of `{link}`\n\n**Error:** {str(e)}")
             await edit.delete()
 
         ind = user.index(f'{int(event.sender_id)}')
