@@ -1,1 +1,1 @@
-worker: python -m ggn
+worker: python -m Restriction

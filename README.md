@@ -1,7 +1,6 @@
 <h1 align="center">
-  <b>Save restricted Content Bot | Enterprise Release June 2024. </b>
-</h1>
-
+  <b>Save restricted Content Bot by <a href="https://devgagan.in"> devgagan </a> | Enterprise Release June 2024.
+</h1> 
     
 Contact: [Telegram](https://t.me/devggn)
 
@@ -9,156 +8,90 @@ Contact: [Telegram](https://t.me/devggn)
 
 ## ENTERPRISE RELEASE INFO
 
-**Update**: This bot is updated with login functionalities, custom rename tag adding, log group, caption changing and and many more scroll down to last to see the latest update i.e. on 28 June 2024.
+**Update**: This bot is updated with login functionalities, custom rename tag adding, log group, caption changing and and many more scroll down to last to see the latest update i.e. on 18 June 2024.
 
-## Features:
-
-- Able to extarct the content the from private or public enntities/channels/group
-- direct rename and forward to channel/group/users
-- Custome caption/thumbnail
-- auto default thumbnail removal from videos
-- Deleting/Replacing words from file name and caption
-- Easy to use and deploy
-- auto pin messages(if they are pinned)
-- login via phone number
-- Able to download Youtube videos + 30 more sites supported via `/dl` command 
-
-### Try Live Bot
-Bot link - [CLICK HERE](https://t.me/advance_content_saver_bot)
+### Try Live Bot based on `main` branch (my code, not on `leakrepo` branch)
+Bot link - [Advance Content Saver Bot](https://t.me/advance_content_saver_bot)
 ---
-A stable telegram bot to get restricted messages from group/channel/bot with custom thumbnail support , made by [TEAM SPY](https://t.me/devggn) This bot can run in channels directly.
 
-
-## How to get vars - [TEAM SPY](https://t.me/devggn)
-
-- `BOT TOKEN`: @Botfather on telegram
-
-- `OWNER_ID`: Go to @missrose_bot, start and send /info to get your id
-
-- `FORCESUB`: Before starting building bots create a public channel and get the username without '@'Make bot admin in that channel.
-
-- `LOG_GROUP`: Get is by copying any post link and extract value just after `https:t.me/c/` and next `/` then after put `-100` before it. Make bot ADMIN in that channel or group.
- 
-- `API_ID` and `API_HASH`: [Telegram.org](https://my.telegram.org/auth)
-
-- `MONGO_DB`: Create new mongo db it is not recommended to use the default one if you dont know how to create you can use otherwise dont use bcz it may lead to account hack/deletion through session.
+- works for both public and private chats
+- Custom thumbnail support for Pvt medias
+- supports text and webpage media messages
+- Faster speed
+- Force subscribe available
+- To save from bots send link in this format : `t.me/b/bot_username/message_id` (use plus messenger for message_id)
+- `/batch` - (For owner only) Use this command to save upto 10000 files from a pvt or public restricted channel at once.
+- `/cancel` -  Use this to stop batch
+- Time delay is added to avoid FloodWait and keep user account safe.
+- `/setchat` directly upload in channel or group
 
 ## Deploying Guide - [TEAM SPY](https://t.me/devggn)
+
+**Note** : This repository contains three branches `leakrepo` as default branch `main` as main branch and `standalone` | `main` branch codes and `standalone` branch code written by me while `leakrepo` branch code is leaked premium source.
+So before deploying select branch as per your needs..
+
+### How to get required vars
+ 
+- API_ID and API_HASH from [telegram.org](https://my.telegram.org/auth)
+- BOT_TOKEN: @Botfather on telegram
+- OWNER_ID : Go to @missrose_bot on telegram and send `/info` to know your ID
+- CHANNEL_ID : This will be used as Force Subscribe channel
+- LOG_GROUP: Create a Group or Channel add you bot there and forward any message of that channel/group to @userinfobot to know the ID of you channel/group
+- MONGO_DB: It is recommended to use your mongoDB to avoid session hacks and all
+Note : You must make bot admin in both channels
 
 ### Deploy on `VPS`
 
 Easy Method:
-- Fork and star the repo
-- Go to main then edit ```config.py``` as below
-- Put respective values in `""` and save.
-
-```
-API_ID = int(getenv("API_ID", ""))
-API_HASH = getenv("API_HASH", "")
-BOT_TOKEN = getenv("BOT_TOKEN", "")
-OWNER_ID = int(getenv("OWNER_ID", ""))
-MONGODB_CONNECTION_STRING = getenv("MONGO_DB", "mongodb+srv://ggn:ggn@ggn.upuljx5.mongodb.net/?retryWrites=true&w=majority&appName=ggn")
-LOG_GROUP = int(getenv("LOG_GROUP", ""))
-FORCESUB = getenv("FORCESUB", "")
-```
-
+- Fork repo
+- Go to ```config.py``` as below
+- Fill variables inside the double quoted commas `""`  
 - Now run following commands one by one...
-
 ```
 sudo apt update
 sudo apt install ffmpeg git python3-pip
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install v18 #nodejs 18+
 git clone your_repo_link
 cd you_repo_name
 pip3 install -r requirements.txt
-python3 -m ggn
+python3 -m Restriction
 ```
 
-- if you want bot to be running in background then enter `screen -S gagan` before `python3 -m ggn` 
-- after `python3 -m ggn`, click `ctrl+A`, `ctrl+D`
+- if you want bot to be running in background then enter `screen -S gagan` before `python3 -m Restriction` 
+- after `python3 -m Restriction`, click `ctrl+A`, `ctrl+D`
 - if you want to stop bot, then enter `screen -r gagan` and to kill screen enter `screen -S gagan -X quit`.
 
 
 ## Deploy your bot on `heroku`
-
-» Method - 1:
 - Star the repo, and fork it in desktop mode
 - Click on  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-- Fill your values and done ✅
- 
-» Method - 2:
-- Star the repo, rate and fork it in desktop mode
-- create app in heroku
-- go to settings of ```app›› reveal config vars››``` add all variables as shown above by typing their correct name and value.
-- add buildpacks i.e. `python` and `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`
-- connect to github and deploy
-- turn on dynos
-- Note: you must add buildpack in heroku to get the original video thumbnail and to remove already set thumbnail otherwise you will get black video
-<b> How to add? </b>
-- Go to heroku settings
-- scroll down and click add buildpack
-- now paste following link i.e `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git` in input bar and click add buildpack
-- Now go back and redeploy
+- Fill your values and click deploy ✅
 
-## Deploy on Render
-- Fork and star the repo
-- edit `config.py` same as guided for VPS deployment (you can edit on render also by filling enviroment variables)
-- Go to render.com and singup/signin
-- create new web service and select free plan
-- connect github and your repository
-- Click Deploy
-- Done ✅
-- See tutorial
+## Deploy on Render 
+See following tutorial to deploy on Render 👇
+
 https://t.me/save_restricted_content_bots/759
 
-## Koyeb Deployment
-
-- Fork and star the repo
-- edit `config.py` same as guided for VPS deployment (you can edit on koyeb also by filling enviroment variables)
-- Go to koyeb.com and singup/signin
-- create new web service make sure you must choose build type `Dokerfile` because in Koyeb as a default it is checked to `buildpacks` so you have to change that.
-- connect github and your repository
-- Click Deploy
-- Done ✅
 
 ## Terms of USE / Modification 
 Visit [Terms](https://github.com/devgaganin/Save-Restricted-Content-Bot-Repo/blob/main/TERMS_OF_USE.md) and accept the guidelines.
 
 # Updates
 
-Last update 8 JULY 2024
+## Update: 24 June 2024
 
-### Available Commands
+- Added `/login` method via phone number
+- Session saving permanently
+- Fixed old bugs
+- Added /add_premium and /remove_premium along with parameters of `user_id` and `time` for the period of premium subscription.
+- All old features along with `button` handler
 
-You can copy and paste the following commands into @BotFather:
 
-```plaintext
-start - ✅ Check if I am alive!
-batch - 😎 batch method
-dl - 🎞 Download videos from YouTube, Xsite, Instagram, Amazon Mini TV, Pinterest, LinkedIn, Internet Archive, etc. /dl <link>
-login - login via phone number
-auth - authorize users
-unauth - revoke access
-settings - Get all settings in a single command for rename, replace delete, setchat everything
-broadcast - send message to bot users
-session - generate Pyrogram V2 session
-plan - 💰 Learn about premium plan details
-terms - 📋 View the bot's terms and conditions
-stats - 📊 Check the statistics
-speedtest - 🔴 Check speed (Only for sudo users)
-get - 🙃 Get a list of current users
-list - 🍏 List authorized users
-lock - ⚡ Add channels to the protected list to prevent extraction
-pro - 💎 Add session to save restricted files from private chats/bots
-noob - 😭 Delete the Pro activation
-host - ☁️ Host your own SRC Bot
-unhost - 🌨️ Unhost the SRC and FWD Bot
-help - 😧 Get command help
-cancel - ❌ Cancel ongoing process
-```
+## Contributers
+My group members ... Join @devggn to know them.
+Credit goes to them not to me | Special thanks to Yash for leaking this Repo
 
----
-
-## Important Note
-
-**Note**: Changing the terms and commands doesn't magically make you a developer. Real development involves understanding the code, writing new functionalities, and debugging issues, not just renaming things. If only it were that easy!
+Thanks!
 
